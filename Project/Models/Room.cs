@@ -11,9 +11,12 @@ namespace ConsoleAdventure.Project.Models
     public List<Item> Items { get; set; }
     public Dictionary<string, IRoom> Exits { get; set; }
 
-    public void AddExit(string direction, Room room)
+    public void AddExit(Dictionary<string, Room> obj)
     {
-      Exits.Add(direction, room);
+      foreach (KeyValuePair<string, Room> item in obj)
+      {
+        Exits.Add(item.Key, item.Value);
+      }
     }
 
     public Room(string name, string description)

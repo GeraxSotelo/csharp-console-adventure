@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using ConsoleAdventure.Project.Interfaces;
 using ConsoleAdventure.Project.Models;
@@ -12,19 +13,22 @@ namespace ConsoleAdventure.Project
 
     public void PrintInstructions()
     {
-      Messages.Add("Enter a command to move");
+
     }
 
     public void Go(string direction)
     {
-      switch (direction)
+      IRoom room = _game.CurrentRoom;
+      if (room.Exits.ContainsKey(direction))
       {
-        case "north":
-          break;
-        default:
-          Messages.Add("Invalid direction");
-          break;
+        room = room.Exits[direction];
+        Messages.Add($"You are at the {room.Name}");
       }
+      else
+      {
+        Messages.Add("Invalid direction");
+      }
+      Console.Clear();
     }
     public void Help()
     {
@@ -75,6 +79,10 @@ namespace ConsoleAdventure.Project
     {
       _game = new Game();
       Messages = new List<string>();
+      //   foreach (var item in _game.CurrentRoom.Exits)
+      //   {
+      //     Console.WriteLine(item.Key + "--" + item.Value.Name);
+      //   }
     }
   }
 }
