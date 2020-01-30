@@ -13,7 +13,7 @@ namespace ConsoleAdventure.Project
 
     public void PrintInstructions()
     {
-
+      Messages.Add($"You are at the {_game.CurrentRoom.Name}\n");
     }
 
     public void Go(string direction)
@@ -21,8 +21,8 @@ namespace ConsoleAdventure.Project
       IRoom room = _game.CurrentRoom;
       if (room.Exits.ContainsKey(direction))
       {
-        room = room.Exits[direction];
-        Messages.Add($"You are at the {room.Name}");
+        _game.CurrentRoom = room.Exits[direction];
+
       }
       else
       {
