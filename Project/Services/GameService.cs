@@ -13,7 +13,7 @@ namespace ConsoleAdventure.Project
 
     public void PrintInstructions()
     {
-      Messages.Add($"You are at the {_game.CurrentRoom.Name}\n");
+      Messages.Add($"\nYou are at the {_game.CurrentRoom.Name}\n");
     }
 
     public void Go(string direction)
@@ -22,11 +22,17 @@ namespace ConsoleAdventure.Project
       if (room.Exits.ContainsKey(direction))
       {
         _game.CurrentRoom = room.Exits[direction];
-
+        // Messages.Add($"You are at the {_game.CurrentRoom.Name}\n");
+        Messages.Add($"There are {_game.CurrentRoom.Exits.Count} paths you can take.\n");
+        foreach (var item in _game.CurrentRoom.Exits)
+        {
+          string str = item.Key.Substring(0, 1).ToUpper() + item.Key.Substring(1);
+          Messages.Add($"{str} towards the {item.Value.Name}");
+        }
       }
       else
       {
-        Messages.Add("Invalid direction");
+        Messages.Add("Invalid direction\n");
       }
       Console.Clear();
     }
@@ -79,10 +85,6 @@ namespace ConsoleAdventure.Project
     {
       _game = new Game();
       Messages = new List<string>();
-      //   foreach (var item in _game.CurrentRoom.Exits)
-      //   {
-      //     Console.WriteLine(item.Key + "--" + item.Value.Name);
-      //   }
     }
   }
 }
