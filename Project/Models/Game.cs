@@ -51,6 +51,11 @@ namespace ConsoleAdventure.Project.Models
       Church.AddExit(new Dictionary<string, Room>() { { "south", HilindeAndAnies }, { "west", Market }, { "east", TownJail } });
       TownJail.AddExit(new Dictionary<string, Room>() { { "west", Church } });
 
+      Item waterBottle = new Item("Water Bottle", "Full water bottle. Can you trust it?");
+      Item key = new Item("Metal Key", "Looks like a door key. It might be useful.");
+
+      CarpenterShop.Items.Add(waterBottle);
+
       CurrentRoom = TownEntrance;
     }
 

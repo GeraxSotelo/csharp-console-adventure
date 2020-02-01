@@ -27,8 +27,8 @@ namespace ConsoleAdventure.Project.Controllers
     //NOTE Gets the user input, calls the appropriate command, and passes on the option if needed.
     public void GetUserInput()
     {
-      Console.WriteLine("What would you like to do?\n");
-      Console.WriteLine("Type 'go' and a direction to move\n");
+      Console.WriteLine("\n[What would you like to do?]");
+      Console.WriteLine("[Type 'Help' for instructions]\n");
       string input = Console.ReadLine().ToLower() + " ";
       string command = input.Substring(0, input.IndexOf(" "));
       string option = input.Substring(input.IndexOf(" ") + 1).Trim();
@@ -41,9 +41,17 @@ namespace ConsoleAdventure.Project.Controllers
         case "exit":
           _running = false;
           break;
+        case "help":
+          Console.Clear();
+          _gameService.Help();
+          break;
         case "go":
           _gameService.Go(option);
           _gameService.PrintInstructions();
+          break;
+        case "look":
+          Console.Clear();
+          _gameService.Look();
           break;
         default:
           Console.Clear();

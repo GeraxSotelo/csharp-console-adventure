@@ -13,22 +13,17 @@ namespace ConsoleAdventure.Project
 
     public void PrintInstructions()
     {
-      Messages.Add($"\nYou are at the {_game.CurrentRoom.Name}\n");
+      Messages.Add($"\n[You are at the {_game.CurrentRoom.Name}]");
     }
 
+    /********************GO********************/
     public void Go(string direction)
     {
       IRoom room = _game.CurrentRoom;
       if (room.Exits.ContainsKey(direction))
       {
         _game.CurrentRoom = room.Exits[direction];
-        // Messages.Add($"You are at the {_game.CurrentRoom.Name}\n");
-        Messages.Add($"There are {_game.CurrentRoom.Exits.Count} paths you can take.\n");
-        foreach (var item in _game.CurrentRoom.Exits)
-        {
-          string str = item.Key.Substring(0, 1).ToUpper() + item.Key.Substring(1);
-          Messages.Add($"{str} towards the {item.Value.Name}");
-        }
+        Messages.Add($"---{_game.CurrentRoom.Name.ToUpper()}---\n");
       }
       else
       {
@@ -38,10 +33,11 @@ namespace ConsoleAdventure.Project
     }
     public void Help()
     {
-      Messages.Add("Type 'go' and the direction to move: 'north' 'south' 'east' 'west'");
-      Messages.Add("Type 'take' and item name to take item");
-      Messages.Add("Type 'use' and item name to use item");
-      Messages.Add("Type 'q', 'quit', or 'exit' to end game.");
+      Messages.Add("Type [GO] and the direction to move: [NORTH] [SOUTH] [EAST] [WEST]");
+      Messages.Add("Type [LOOK] to look around.");
+      Messages.Add("Type [TAKE] and item name to take item");
+      Messages.Add("Type [USE] and item name to use item");
+      Messages.Add("Type [Q], [QUIT], or [EXIT] to end game.");
     }
 
     public void Inventory()
@@ -51,7 +47,23 @@ namespace ConsoleAdventure.Project
 
     public void Look()
     {
-      throw new System.NotImplementedException();
+      IRoom room = _game.CurrentRoom;
+      Messages.Add($"-There are {room.Exits.Count} paths you can take.-\n");
+      foreach (var item in room.Exits)
+      {
+        string str = item.Key.Substring(0, 1).ToUpper() + item.Key.Substring(1);
+        Messages.Add($"({str} - {item.Value.Name})");
+      }
+
+      if (room.Items.Count > 0)
+      {
+        Messages.Add($"\nThere are {room.Items.Count} item(s) in this room.\n");
+        foreach (var item in room.Items)
+        {
+          Messages.Add($"({item.Name} - {item.Description})");
+        }
+        Messages.Add("\nType 'Take' and item name to take item.");
+      }
     }
 
     ///<summary>
