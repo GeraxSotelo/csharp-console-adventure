@@ -12,6 +12,8 @@ namespace ConsoleAdventure.Project.Models
     //NOTE Make yo rooms here...
     public void Setup()
     {
+      Player player = new Player("Hobbit");
+
       Room TownEntrance = new Room("Town Entrance", "Description");
       Room TiriandeAndEnon = new Room("intersection of Tiriande and Enon", "Description");
       Room Inn = new Room("Inn", "Description");
@@ -54,8 +56,10 @@ namespace ConsoleAdventure.Project.Models
       Item waterBottle = new Item("Water Bottle", "Full water bottle. Can you trust it?");
       Item key = new Item("Metal Key", "Looks like a door key. It might be useful.");
 
-      CarpenterShop.Items.Add(waterBottle);
+      TownEntrance.Items.Add(waterBottle);
+      TownEntrance.Items.Add(key);
 
+      CurrentPlayer = player;
       CurrentRoom = TownEntrance;
     }
 

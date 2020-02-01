@@ -53,6 +53,18 @@ namespace ConsoleAdventure.Project.Controllers
           Console.Clear();
           _gameService.Look();
           break;
+        case "inventory":
+          Console.Clear();
+          _gameService.Inventory();
+          break;
+        case "take":
+          Console.Clear();
+          _gameService.TakeItem(option);
+          break;
+        case "use":
+          Console.Clear();
+          _gameService.UseItem(option);
+          break;
         default:
           Console.Clear();
           Console.WriteLine("Invalid input\n");
