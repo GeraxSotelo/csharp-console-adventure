@@ -38,7 +38,7 @@ namespace ConsoleAdventure.Project
       }
       else
       {
-        Messages.Add("Invalid direction\n");
+        Messages.Add("\nInvalid direction\n");
       }
       Console.Clear();
     }
@@ -46,7 +46,7 @@ namespace ConsoleAdventure.Project
     /********************HELP********************/
     public void Help()
     {
-      Messages.Add("Type [GO] and the direction to move: [NORTH] [SOUTH] [EAST] [WEST]");
+      Messages.Add("\nType [GO] and the direction to move: [NORTH] [SOUTH] [EAST] [WEST]");
       Messages.Add("Type [LOOK] to look around.");
       Messages.Add("Type [INVENTORY] to check your backpack.");
       Messages.Add("Type [TAKE] and item name to take item");
@@ -179,6 +179,19 @@ namespace ConsoleAdventure.Project
           return;
         }
       }
+
+      // var itemFound = _game.CurrentPlayer.Inventory.Find(i=>i.Name.ToLower()== itemName);
+      // if(itemFound == null){
+      //   itemFound = _game.CurrentRoom.Items.Find(i=>i.Name.ToLower()== itemName);
+      //   if(itemFound == null){
+      //     Messages.Add("No such item");
+      //     return;
+      //   }
+      // }
+      // _game.CurrentPlayer.Inventory.Remove(itemFound);
+
+
+
       foreach (var item in pList)
       {
         if (item.Name.ToLower() == itemName)
@@ -215,8 +228,8 @@ namespace ConsoleAdventure.Project
       string answer = Console.ReadLine().ToLower();
       if (answer == "no")
       {
-        Reset();
         TownHallExit();
+        Reset();
       }
       else if (answer == "yes")
       {

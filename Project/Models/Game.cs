@@ -60,7 +60,7 @@ namespace ConsoleAdventure.Project.Models
       #region -ITEMS-
       Item waterBottle = new Item("Water Bottle", "A bottle full of clear liquid. Can you trust it?", true);
       Item key = new Item("Metal Key", "Looks like a door key. It might be useful.", true);
-      Item employeeId = new Item("Employee ID", "Someone must have lost it.", false);
+      Item employeeId = new Item("Employee ID", "Someone must have lost it.", true);
       Item lightSwitch = new Item("Light Switch", "Let there be light.", false);
       #endregion
 
