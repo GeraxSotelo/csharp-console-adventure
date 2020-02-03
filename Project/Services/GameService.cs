@@ -8,7 +8,7 @@ namespace ConsoleAdventure.Project
 {
   public class GameService : IGameService
   {
-    private IGame _game { get; set; }
+    public IGame _game { get; set; }
     public List<string> Messages { get; set; }
     public bool validate = true;
 
@@ -23,7 +23,7 @@ namespace ConsoleAdventure.Project
       if (room.Exits.ContainsKey(direction))
       {
         _game.CurrentRoom = room.Exits[direction];
-        Messages.Add($"---{_game.CurrentRoom.Name.ToUpper()}---\n");
+
         switch (_game.CurrentRoom.Name)
         {
           case "Town Hall":
@@ -54,6 +54,7 @@ namespace ConsoleAdventure.Project
       Messages.Add("Type [Q], [QUIT], or [EXIT] to end game.");
     }
 
+    /********************INVENTORY********************/
     public void Inventory()
     {
       IPlayer player = _game.CurrentPlayer;
@@ -71,39 +72,49 @@ namespace ConsoleAdventure.Project
       }
     }
 
+    /********************LOOK********************/
     public void Look()
     {
       IRoom room = _game.CurrentRoom;
+      //display exits
       if (room.Exits.Count == 1)
       {
         Messages.Add($"-There is 1 path you can take.-\n");
       }
       else
       {
-        Messages.Add($"-There are {room.Exits.Count} paths you can take.-\n");
+        Messages.Add($"\n-There are {room.Exits.Count} paths you can take.-\n");
       }
-
       foreach (var item in room.Exits)
       {
         string str = item.Key.Substring(0, 1).ToUpper() + item.Key.Substring(1);
         Messages.Add($"({str} - {item.Value.Name})");
       }
 
-      if (room.Items.Count > 0)
+      if (room.Accessible)
       {
-        if (room.Items.Count == 1)
+        //display items
+        if (room.Items.Count > 0)
         {
-          Messages.Add($"\nThere is 1 item in this location.\n");
-        }
-        else
-        {
-          Messages.Add($"\nThere are {room.Items.Count} item(s) in this location.\n");
-        }
-        foreach (var item in room.Items)
-        {
-          Messages.Add($"-({item.Name} - {item.Description})-");
+          if (room.Items.Count == 1)
+          {
+            Messages.Add($"\nThere is 1 item in this location.\n");
+          }
+          else
+          {
+            Messages.Add($"\nThere are {room.Items.Count} item(s) in this location.\n");
+          }
+          foreach (var item in room.Items)
+          {
+            Messages.Add($"-({item.Name} - {item.Description})-");
+          }
         }
       }
+      else
+      {
+        Messages.Add("\nYou do not have the ability to view the items in this location.");
+      }
+
     }
 
     ///<summary>
@@ -150,6 +161,7 @@ namespace ConsoleAdventure.Project
       }
 
     }
+
     ///<summary>
     ///No need to Pass a room since Items can only be used in the CurrentRoom
     ///Make sure you validate the item is in the room or player inventory before
@@ -157,26 +169,40 @@ namespace ConsoleAdventure.Project
     ///</summary>
     public void UseItem(string itemName)
     {
-      List<Item> list = _game.CurrentPlayer.Inventory;
-      if (list.Count <= 0)
+      List<Item> rList = _game.CurrentRoom.Items;
+      List<Item> pList = _game.CurrentPlayer.Inventory;
+      foreach (var item in rList)
       {
-        Messages.Add("There are no items in your backpack.");
-      }
-      else
-      {
-        for (int i = 0; i < list.Count; i++)
+        if (item.Name.ToLower() == itemName)
         {
-          if (list[i].Name.ToLower() == itemName)
+          _game.CurrentRoom.Accessible = true;
+          return;
+        }
+      }
+      foreach (var item in pList)
+      {
+        if (item.Name.ToLower() == itemName)
+        {
+          if (pList.Count <= 0)
           {
-            Messages.Add($"You have used the {list[i].Name}");
-            list.RemoveAt(i);
+            Messages.Add("There are no items in your backpack.");
+            return;
           }
           else
           {
-            Messages.Add("Invalid item");
+            for (int i = 0; i < pList.Count; i++)
+            {
+              if (pList[i].Name.ToLower() == itemName)
+              {
+                Messages.Add($"You have used the {pList[i].Name}");
+                pList.RemoveAt(i);
+              }
+            }
+            return;
           }
         }
       }
+      Messages.Add("Invalid Item");
     }
 
     public void TownHall()
@@ -189,7 +215,7 @@ namespace ConsoleAdventure.Project
       string answer = Console.ReadLine().ToLower();
       if (answer == "no")
       {
-        validate = false;
+        Reset();
         TownHallExit();
       }
       else if (answer == "yes")
@@ -202,13 +228,13 @@ namespace ConsoleAdventure.Project
             return;
           }
         }
-        validate = false;
+        Reset();
         Messages.Add("You do not have an ID in your inventory.");
         TownHallExit();
       }
       else if (answer == "q")
       {
-        validate = false;
+        Reset();
       }
       else
       {
@@ -228,7 +254,7 @@ namespace ConsoleAdventure.Project
       Messages.Add("\n[CONGRATULATIONS!]");
       Messages.Add("[You made it to the castle! The king will see you now.]");
       Messages.Add("\n[Hope you brought a gift  :)]");
-      validate = false;
+      Reset();
     }
 
     public GameService()

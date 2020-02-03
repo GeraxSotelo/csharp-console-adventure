@@ -8,6 +8,7 @@ namespace ConsoleAdventure.Project.Models
 
     public string Name { get; set; }
     public string Description { get; set; }
+    public bool Accessible { get; set; }
     public List<Item> Items { get; set; }
     public Dictionary<string, IRoom> Exits { get; set; }
 
@@ -19,10 +20,11 @@ namespace ConsoleAdventure.Project.Models
       }
     }
 
-    public Room(string name, string description)
+    public Room(string name, string description, bool accessible)
     {
       Name = name;
       Description = description;
+      Accessible = accessible;
       Items = new List<Item>();
       Exits = new Dictionary<string, IRoom>();
     }

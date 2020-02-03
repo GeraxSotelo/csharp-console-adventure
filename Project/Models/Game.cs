@@ -15,25 +15,25 @@ namespace ConsoleAdventure.Project.Models
       Player player = new Player("Hobbit");
 
       #region -ROOM LIST-
-      Room TownEntrance = new Room("Town Entrance", "The only direction to go is North.");
-      Room TiriandeAndEnon = new Room("intersection of Tiriande and Enon", "");
-      Room Inn = new Room("Inn", "");
-      Room CarpenterShop = new Room("Carpenter Shop", "Everyone seems to be busy building furniture and weapon parts.");
-      Room TiriandeAndHonione = new Room("intersection of Tiriande and Honione", "");
-      Room EnonAndRyany = new Room("intersection of Enon and Ryany", "");
-      Room BlackSmithShop = new Room("Black Smith Shop", "");
-      Room HonioneAndRyany = new Room("intersection of Honione and Ryany", "");
-      Room Tavern = new Room("Tavern", "");
-      Room FisheryShop = new Room("Fishery Shop", "Eww, it sure smells fishy in here.");
-      Room TownHall = new Room("Town Hall", "");
-      Room ThenreyAndAnies = new Room("intersection of Thenrey and Anies", "");
-      Room HilindeAndAnies = new Room("intersection of Hilinde and Anies", "");
-      Room SylvanTheatre = new Room("Sylvan Theatre", "");
-      Room LockSmithShop = new Room("Lock Smith Shop", "It's really dark in here. It must be closed for the day.");
-      Room Market = new Room("Market", "");
-      Room Church = new Room("Church", "");
-      Room TownJail = new Room("Town Jail", "");
-      Room Castle = new Room("Castle", "");
+      Room TownEntrance = new Room("Town Entrance", "The only direction to go is North.", true);
+      Room TiriandeAndEnon = new Room("intersection of Tiriande and Enon", "", false);
+      Room Inn = new Room("Inn", "", true);
+      Room CarpenterShop = new Room("Carpenter Shop", "Everyone seems to be busy building furniture and weapon parts.", true);
+      Room TiriandeAndHonione = new Room("intersection of Tiriande and Honione", "", true);
+      Room EnonAndRyany = new Room("intersection of Enon and Ryany", "", true);
+      Room BlackSmithShop = new Room("Black Smith Shop", "", true);
+      Room HonioneAndRyany = new Room("intersection of Honione and Ryany", "", true);
+      Room Tavern = new Room("Tavern", "", true);
+      Room FisheryShop = new Room("Fishery Shop", "Eww, it sure smells fishy in here.", true);
+      Room TownHall = new Room("Town Hall", "", true);
+      Room ThenreyAndAnies = new Room("intersection of Thenrey and Anies", "", true);
+      Room HilindeAndAnies = new Room("intersection of Hilinde and Anies", "", true);
+      Room SylvanTheatre = new Room("Sylvan Theatre", "", true);
+      Room LockSmithShop = new Room("Lock Smith Shop", "It's really dark in here. It must be closed for the day. There seems to be a light switch next to the door", false);
+      Room Market = new Room("Market", "", true);
+      Room Church = new Room("Church", "", true);
+      Room TownJail = new Room("Town Jail", "", true);
+      Room Castle = new Room("Castle", "", true);
       #endregion
 
       #region -ROOM EXITS-
@@ -64,10 +64,10 @@ namespace ConsoleAdventure.Project.Models
       Item lightSwitch = new Item("Light Switch", "Let there be light.", false);
       #endregion
 
-      TownEntrance.Items.Add(waterBottle);
-      TownEntrance.Items.Add(key);
-      TownEntrance.Items.Add(employeeId);
-      TownEntrance.Items.Add(lightSwitch);
+      Inn.Items.Add(waterBottle);
+      LockSmithShop.Items.Add(key);
+      Tavern.Items.Add(employeeId);
+      LockSmithShop.Items.Add(lightSwitch);
 
 
       CurrentPlayer = player;
@@ -83,7 +83,6 @@ __________.__                         .___     .__  .__
       Console.WriteLine("\n--WELCOME TO RIVENDELL--\n");
       Console.WriteLine("\n[You have a meeting with the king.]");
       Console.WriteLine("[He is waiting for you in the castle.]\n");
-      Console.WriteLine($"You're at the {CurrentRoom.Name}. {CurrentRoom.Description}");
     }
 
     public Game()

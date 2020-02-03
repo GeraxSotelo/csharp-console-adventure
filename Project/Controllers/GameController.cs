@@ -17,6 +17,8 @@ namespace ConsoleAdventure.Project.Controllers
       _gameService.PrintInstructions();
       while (_running && _gameService.validate)
       {
+        Console.WriteLine($"---{_gameService._game.CurrentRoom.Name.ToUpper()}---");
+        Console.WriteLine($"{_gameService._game.CurrentRoom.Description}");
         Print();
         GetUserInput();
       }
