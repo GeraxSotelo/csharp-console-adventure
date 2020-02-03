@@ -15,20 +15,27 @@ namespace ConsoleAdventure.Project.Controllers
     public void Run()
     {
       _gameService.PrintInstructions();
-      while (_running)
+      while (_running && _gameService.validate)
       {
         Print();
         GetUserInput();
       }
       Console.Clear();
-      Console.WriteLine("Safe Travels");
+      if (!_gameService.validate)
+      {
+        Print();
+      }
+      if (!_running)
+      {
+        Console.WriteLine("\nSafe Travels");
+      }
     }
 
     //NOTE Gets the user input, calls the appropriate command, and passes on the option if needed.
     public void GetUserInput()
     {
-      Console.WriteLine("\n[What would you like to do?]");
-      Console.WriteLine("[Type 'Help' for instructions]\n");
+      Console.WriteLine("\n[Type 'Help' for instructions]\n");
+      Console.Write("\n[What would you like to do?] ");
       string input = Console.ReadLine().ToLower() + " ";
       string command = input.Substring(0, input.IndexOf(" "));
       string option = input.Substring(input.IndexOf(" ") + 1).Trim();
